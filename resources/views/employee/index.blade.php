@@ -13,6 +13,27 @@
     <div class="row">
         <div class="col-med-12">
             <br>
+            <a href="{{url('employees/create')}}" class="btn btn-primary">Agregar nuevo empleado</a>
+            <a href="{{url('companies')}}" class="btn btn-info btn-sm">Ir a Compañias</a>
+            <br>
+
+            @if(session('status'))
+            <div class="alert alert-success">
+                {{session('status')}}
+                </div>
+            @endif
+            @if(session('type1'))
+                <div class="alert alert-warning">
+                    {{session('type1')}}
+                </div>
+            @endif
+            @if(session('type'))
+                <div class="alert alert-danger">
+                    {{session('type')}}
+                </div>
+            @endif
+
+            <br>
             <table CLASS="table table-striped table-bordered">
                 <thead>
                 <tr>
@@ -22,6 +43,7 @@
                     <th>CORREO</th>
                     <th>DOCUMENTO</th>
                     <th>GENERO</th>
+                    <th>OPCIONES</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -33,6 +55,16 @@
                     <td>{{$employee->emails_employees}}</td>
                     <td>{{$employee->documents_employees}}</td>
                     <td>{{$employee->genders_employees}}</td>
+                    <td>
+
+                        <form action="{{url('employees',$employee->id)}}" method="POST">
+                            @method('DELETE')
+                            @csrf
+                            <a href="{{url('employees',$employee->id)}}"class=" btn btn-info btn-sm">Detalles</a>
+                            <a href="{{url('employees/edit',$employee->id)}}"class=" btn btn-warning btn-sm">Editar</a>
+                            <button  type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                        </form>
+                    </td>
                 </tr>
                 @endforeach
                 </tbody>

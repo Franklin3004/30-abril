@@ -12,7 +12,28 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <table CLASS="table">
+            <br>
+            <a href="{{url('companies/create')}}" class="btn btn-primary">Crear nueva compañia</a>
+            <a href="{{url('employees')}}" class="btn btn-info btn-sm">Ir a Empleados</a>
+            <br>
+            @if(session('status'))
+                <div class="alert alert-success">
+                    {{session('status')}}
+                </div>
+            @endif
+            @if(session('type1'))
+                <div class="alert alert-warning">
+                    {{session('type1')}}
+                </div>
+            @endif
+            @if(session('type'))
+                <div class="alert alert-danger">
+                    {{session('type')}}
+                </div>
+            @endif
+
+            <br>
+            <table CLASS="table table-striped table-bordered">
                 <thead>
                 <tr>
                     <th>ID</th>
@@ -20,6 +41,7 @@
                     <th>DESCRIPCION</th>
                     <th>NIT</th>
                     <th>TELEFONO</th>
+                    <th>OPCIONES</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -30,6 +52,16 @@
                     <td> {{ $company->descriptions_companies}}</td>
                     <td> {{ $company->nits_companies}}</td>
                     <td> {{ $company->phones_companies}}</td>
+                    <td>
+
+                        <form action="{{ url('companies',$company->id)}}" method="POST">
+                            @method('DELETE')
+                            @csrf
+                            <a href="{{url('companies',$company->id)}}" class=" btn btn-info btn-sm">Detalles</a>
+                            <a href="{{url('companies/edit',$company->id)}}"class=" btn btn-warning btn-sm">Editar</a>
+                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                        </form>
+                    </td>
                 </tr>
                 @endforeach
                 </tbody>
